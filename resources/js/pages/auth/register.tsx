@@ -23,8 +23,11 @@ export default function Register() {
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name" className="text-[#1a1a1a]">
+                                    Name
+                                </Label>
                                 <Input
+                                    className="text-[#1a1a1a]"
                                     id="name"
                                     type="text"
                                     required
@@ -41,8 +44,11 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
+                                <Label htmlFor="email" className="text-[#1a1a1a]">
+                                    Email address
+                                </Label>
                                 <Input
+                                    className="text-[#1a1a1a]"
                                     id="email"
                                     type="email"
                                     required
@@ -55,8 +61,11 @@ export default function Register() {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password" className="text-[#1a1a1a]">
+                                    Password
+                                </Label>
                                 <PasswordInput
+                                    className='text-[#1a1a1a]'
                                     id="password"
                                     required
                                     tabIndex={3}
@@ -64,14 +73,18 @@ export default function Register() {
                                     name="password"
                                     placeholder="Password"
                                 />
+                                <p className="mt-1 text-xs text-[#717182]">
+                                    Must be at least 8 characters, with an uppercase letter, number, and special character.
+                                </p>
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="password_confirmation">
+                                <Label htmlFor="password_confirmation" className="text-[#1a1a1a]">
                                     Confirm password
                                 </Label>
                                 <PasswordInput
+                                    className="text-[#1a1a1a]"
                                     id="password_confirmation"
                                     required
                                     tabIndex={4}
@@ -81,12 +94,13 @@ export default function Register() {
                                 />
                                 <InputError
                                     message={errors.password_confirmation}
+                                    className="mt-2"
                                 />
                             </div>
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-2 w-full bg-[#5E0006] text-white hover:bg-[#4a0004]"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
@@ -95,9 +109,9 @@ export default function Register() {
                             </Button>
                         </div>
 
-                        <div className="text-center text-sm text-muted-foreground">
+                        <div className="text-center text-sm text-[#717182]">
                             Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
+                            <TextLink href={login()} tabIndex={6} className="text-[#5E0006] hover:underline"> 
                                 Log in
                             </TextLink>
                         </div>

@@ -43,7 +43,7 @@ export default function Welcome() {
                         <a href="#how-it-works" className="text-sm text-[#1a1a1a] transition-colors">
                             How It Works
                         </a>
-                        <Link>
+                        <Link href="/login"> 
                             <Button variant="outline" size="sm">Sign In</Button>
                         </Link>
                     </nav>
