@@ -42,18 +42,25 @@ export default function UploadResumePage() {
         setIsUploading(true);
         setUploadProgress(0);
 
-        const interval = setInterval(() => {
-            setUploadProgress((prev) => {
-                if (prev >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        router.visit('/dashboard');
-                    }, 500);
-                    return 100;
-                }    
-                return prev + 10;
-            });
-        }, 200);
+        const data = new FormData();
+        data.append('resume', file);
+
+
+        router.post('/resumes', data, {
+            forceFormData: true,
+            onProgress: (event) => {
+                if (event?.percentage != null) {
+                    setUploadProgress(Math.round(event.percentage));
+                }
+            },
+            onSuccess: () => {
+                setIsUploading(false);
+                router.visit('/dashboard');
+            },
+            onError: () => {
+                setIsUploading(false);
+            }
+        });
     };
 
 
@@ -99,7 +106,7 @@ export default function UploadResumePage() {
                                 />
 
                                 <label htmlFor="file-upload">
-                                    <Button size="lg" asChild>
+                                    <Button size="lg" className='bg-[#5E0006] text-white hover:bg-[#5E0006]/90' asChild>
                                         <span>Choose File</span>
                                     </Button>
                                 </label>
@@ -211,7 +218,7 @@ export default function UploadResumePage() {
                         <div className="w-12 h-12 rounded-xl bg-[#5E0000]/10 flex items-center justify-center mx-auto mb-3">
                             <FileText className="w-6 h-6 text-[#5E0000]" />
                         </div>
-                        <h4 className="font-semibold text-[#1a1a1a] mb-2">ISecure Upload</h4>
+                        <h4 className="font-semibold text-[#1a1a1a] mb-2">Secure Upload</h4>
                         <p className="text-sm text-[#717182]">
                             Your data is encrypted and private
                         </p>
