@@ -4,17 +4,17 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Analysis;
-use App\Services\OpenAIService;
+use App\Services\OpenRouterService;
 use App\Models\Resume;
 use Illuminate\Http\Request;
 
 class AnalysisController extends Controller
 {
-    public function analyze($resumeId, OpenAIService $ai)
+    public function analyze($resumeId, OpenRouterService $openRouterService)
     {
         $resume = Resume::findOrFail($resumeId);
 
-        $result = $ai->analyzeResume($resume->parsed_text);
+        $result = $openRouterService->analyzeResume($resume->parsed_text);
 
         $analysis = Analysis::create([
             'resume_id' => $resume->id,

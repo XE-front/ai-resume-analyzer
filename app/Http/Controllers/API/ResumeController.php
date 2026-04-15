@@ -22,8 +22,6 @@ class ResumeController extends Controller
         $parsedText = $parser->parse($filePath);
 
         $raw = $openRouterService->analyzeResume($parsedText);
-        \Log::info('openrouter_raw', $raw);
-        \Log::info('openrouter_content', ['content' => data_get($raw, 'choices.0.message.content')]);
 
         $content = data_get($raw, 'choices.0.message.content');
         $analysis = json_decode($content, true) ?? [];
@@ -36,6 +34,9 @@ class ResumeController extends Controller
 
         $resume->analysis()->create([
             'score' => data_get($analysis, 'score'),
+            'ats_score' => data_get($analysis, 'ats_score'),    
+            'format_quality' => data_get($analysis, 'format_quality'),
+            'score_description' => data_get($analysis, 'score_description'),
             'skills' => data_get($analysis, 'skills'),
             'strengths' => data_get($analysis, 'strengths'),
             'weaknesses' => data_get($analysis, 'weaknesses'),

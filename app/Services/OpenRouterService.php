@@ -19,7 +19,7 @@ class OpenRouterService
             'messages' => [
                 [
                     'role' => 'system',
-                    'content' => 'Return only JSON in this exact shape: {"score":number,"skills":array,"strengths":array,"weaknesses":array,"suggestions":array}. The score must be an integer from 0 to 100.'
+                    'content' => 'Return only JSON in this exact shape: {"score":number,"ats_score":number,"format_quality":number,"score_description":string,"skills":array,"strengths":array,"weaknesses":array,"suggestions":array}. The score, ats_score, and format_quality must be integers from 0 to 100. The overall score must be derived from ats_score and format_quality (for example, average of the two).'
                 ],
                 [
                     'role' => 'user',

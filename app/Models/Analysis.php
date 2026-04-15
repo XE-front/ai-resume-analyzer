@@ -11,6 +11,9 @@ class Analysis extends Model
     protected $fillable = [
         'resume_id',
         'score',
+        'ats_score',
+        'format_quality',
+        'score_description',
         'skills',
         'strengths',
         'weaknesses',
@@ -18,6 +21,9 @@ class Analysis extends Model
     ];
 
     protected $casts = [
+        'score' => 'integer',
+        'ats_score' => 'integer',
+        'format_quality' => 'integer',
         'skills' => 'array',
         'strengths' => 'array',
         'weaknesses' => 'array',
