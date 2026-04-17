@@ -29,7 +29,7 @@ export function AppSidebarHeader({
                         {pageTitle}
                     </h1>
                 </div>
-                {breadcrumbs.length > 0 && (
+                {breadcrumbs.length > 1 && (
                     <div className="mt-1">
                         <Breadcrumbs breadcrumbs={breadcrumbs} />
                     </div>

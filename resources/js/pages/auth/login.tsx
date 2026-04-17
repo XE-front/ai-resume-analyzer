@@ -39,6 +39,7 @@ export default function Login({
                                     Email address
                                 </Label>
                                 <Input
+                                    className="text-[#1a1a1a]"
                                     id="email"
                                     type="email"
                                     name="email"
@@ -67,6 +68,7 @@ export default function Login({
                                     )}
                                 </div>
                                 <PasswordInput
+                                    className="text-[#1a1a1a]"
                                     id="password"
                                     name="password"
                                     required
