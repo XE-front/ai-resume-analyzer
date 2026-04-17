@@ -36,17 +36,21 @@ type DashboardProps = {
         resumeCount: number;
     };
     analysis: Analysis | null;
-    hasResumes: boolean;
+    hasResume: boolean;
 };
 
-export default function Dashboard({ stats, analysis, hasResumes }: DashboardProps)  {
-    const scoreMessage = !hasResumes || stats.resumeScore == null
+export default function Dashboard({ stats, analysis, hasResume }: DashboardProps)  {
+    const resumeScore = analysis?.score ?? stats.resumeScore;
+
+    const scoreMessage = !hasResume || resumeScore == null
         ? 'Upload a resume to see your score.'
-        : stats.resumeScore >= 75
-            ? 'Your resume is performing well across key metrics.'
-            : stats.resumeScore >= 50
-                ? 'Needs improvement to reach stronger performance.'
-                : 'Requires significant improvement to perform well.';
+        : resumeScore >= 85
+            ? 'Excellent resume. It is performing strongly across the core metrics.'
+            : resumeScore >= 70
+                ? 'Good resume. A few improvements could make it stronger.'
+                : resumeScore >= 50
+                    ? 'Needs improvement to reach stronger performance.'
+                    : 'Requires significant improvement to perform well.';
 
     return (
         <>
@@ -204,7 +208,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                                     </div>
                                 ) : (
                                     <div className="text-sm text-[#717182] text-center py-10">
-                                        {hasResumes ? 'No skills extracted yet.' : 'Upload a resume to see skill insights.'}
+                                        {hasResume ? 'No skills extracted yet.' : 'Upload a resume to see skill insights.'}
                                     </div>
                                 )}
                             </div>

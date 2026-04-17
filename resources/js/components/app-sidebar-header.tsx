@@ -1,5 +1,4 @@
 import { usePage } from '@inertiajs/react';
-import { Bell } from 'lucide-react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import { UserMenuContent } from '@/components/user-menu-content';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -38,15 +37,6 @@ export function AppSidebarHeader({
             </div>
 
             <div className="flex items-center gap-2">
-                <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="h-9 w-9 rounded-full text-[#5E0006] hover:text-[#4a0004] focus-visible:ring-[3px] focus-visible:ring-ring focus-visible:outline-none"
-                    aria-label="Notifications"
-                >
-                    <Bell className="size-4" />
-                </Button>
 
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
