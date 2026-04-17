@@ -24,6 +24,7 @@ type Analysis = {
     skills: string[];
     ats_score: number;
     format_quality: number;
+    content_quality: number;
     strengths: string[];
     weaknesses: string[];
     suggestions: string[];
@@ -39,12 +40,20 @@ type DashboardProps = {
 };
 
 export default function Dashboard({ stats, analysis, hasResumes }: DashboardProps)  {
+    const scoreMessage = !hasResumes || stats.resumeScore == null
+        ? 'Upload a resume to see your score.'
+        : stats.resumeScore >= 75
+            ? 'Your resume is performing well across key metrics.'
+            : stats.resumeScore >= 50
+                ? 'Needs improvement to reach stronger performance.'
+                : 'Requires significant improvement to perform well.';
+
     return (
         <>
             <Head title="Dashboard" />
             <div className="space-y-6 bg-[#f5f5f5] p-4">
                 {/* Stats Cards */}
-                <div className="my-5 mx-5 grid md:grid-cols-4 gap-6">
+                {/* <div className="my-5 mx-5 grid md:grid-cols-4 gap-6">
                     <Card className="border-2 border-[#5E0006]/20 bg-white">
                         <CardContent className="p-6">
                             <div className="flex items-center justify-between mb-4">
@@ -57,7 +66,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                             <div className="text-sm text-[#717182]">Resume Score</div>
                             <div className="mt-3 text-xs text-[#5E0006]"> from last update</div>
                         </CardContent>
-                    </Card>
+                    </Card> */}
 
                     {/* <Card className="border-2 border-[#5E0006]/20 bg-gradient-to-br from-[#5E0006]/5 to-transparent">
                         <CardContent className="p-6">
@@ -85,7 +94,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                         </CardContent>
                     </Card> */}
 
-                    <Card className="border-2 border-[#5E0006]/20 bg-white">
+                    {/* <Card className="border-2 border-[#5E0006]/20 bg-white">
                         <CardContent className="p-6">
                             <div className="flext items-center justify-between mb-4">
                                 <div className="w-12 h-12 rounted-xl bg-green-500/10 flex items-center justify-center">
@@ -97,7 +106,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                             <div className="mt-3 text-xs text-[#717182]">This month</div>
                         </CardContent>
                     </Card>
-                </div>
+                </div> */}
 
                 <div className="grid lg:grid-cols-3 gap-6">
                     {/* Resume Score Card */}
@@ -105,8 +114,8 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                         <CardHeader className="bg-[#ffffff]">
                             <CardTitle className="flex items-center justify-between ">
                                 <span className="text-[#1a1a1a]">Resume Performance</span>
-                                <Link href="#">
-                                    <Button variant="ghost" size="sm" className="text-[#1a1a1a]">
+                                <Link href="/result">
+                                    <Button variant="ghost" size="sm" className="text-[#1a1a1a] hover:bg-[#5E0006] hover:text-white">
                                         View Details
                                         <ArrowRight className="w-4 h-4 ml-2"/>
                                     </Button>
@@ -119,26 +128,30 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                                 <div className="text-center py-8">
                                     <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-gradient-to-br from-[#5E0006]/20 to-[#D53E0F]/20 mb-4">
                                         <div className="text-5xl font-bold text-[#5E0006]">
-                                            {stats.resumeScore}
+                                            {stats.resumeScore ?? '--'}
                                         </div>
                                     </div>
                                     <p className="text-center text-[#717182]">
-                                        Your resume is performing well across key metrics.
+                                        {scoreMessage}
                                     </p>
                                 </div>
 
-                                <div className="grid md:grid-cols-2 gap-4 pt-4 border-t mt-4 items-center">
+                                <div className="grid md:grid-cols-3 gap-4 pt-4 border-t mt-4 items-center">
                                     <div className="text-center">
-                                        <div className="text-2xl font-bold text-green-600 mb-1 ">{analysis?.ats_score ?? '--'}</div>
+                                        <div className="text-2xl font-bold text-green-600 mb-1 ">{analysis?.ats_score != null ? `${analysis.ats_score}%` : '--'}</div>
                                         <div className="text-xs text-[#717182]">ATS Score</div>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl font-bold text-blue-600 mb-1 ">{analysis?.format_quality != null ? `${analysis.format_quality}%` : '--'}</div>
                                         <div className="text-xs text-[#717182]">Format Quality</div>
                                     </div>
+                                    <div className="text-center">
+                                        <div className="text-2xl font-bold text-blue-600 mb-1 ">{analysis?.content_quality != null ? `${analysis.content_quality}%` : '--'}</div>
+                                        <div className="text-xs text-[#717182]">Content Quality</div>
+                                    </div>
                                 </div>
 
-                                <Link href="#" className="block mt-5">
+                                <Link href="/upload-resume" className="block mt-5">
                                     <Button className="w-full bg-[#5E0006] hover:bg-[#5E0006]/90 text-[#ffffff]" size="lg">
                                         <Upload className="w-5 h-5 mr-2" />
                                         Update New Resume
@@ -164,7 +177,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                                     </div>
                                 ))}
                                 <Link href="#">
-                                    <Button variant="outline" className="w-full mt-4">
+                                    <Button variant="outline" className="w-full mt-4 bg-[#5E0006] text-white border-[#5E0006]/20 hover:bg-[#5E0006]/20">
                                         View All Suggestions
                                     </Button>
                                 </Link>
@@ -181,7 +194,7 @@ export default function Dashboard({ stats, analysis, hasResumes }: DashboardProp
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                {analysis?.skills.length ? (
+                                {analysis?.skills?.length ? (
                                     <div className="flex flex-wrap gap-2">
                                         {analysis.skills.map((skill, index) => (
                                         <Badge key={index} className="bg-[#5E0006]/10 text-[#5E0006] border border-[#5E0006]/20">
