@@ -81,6 +81,7 @@ export default function Login({
 
                             <div className="flex items-center space-x-3">
                                 <Checkbox
+                                    className='border-gray-300'
                                     id="remember"
                                     name="remember"
                                     tabIndex={3}

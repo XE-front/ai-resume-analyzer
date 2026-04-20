@@ -16,7 +16,9 @@ class ResumeController extends Controller
             'resume' => 'required|file|mimes:pdf|max:2048',
             ]);
             
-        $path = $request->file('resume')->store('resumes', 'public');
+        $file = $request->file('resume');
+        $path = $file->store('resumes', 'public');
+        $fileName = $file->getClientOriginalName();
 
         $filePath = storage_path('app/public/' . $path);
         $parsedText = $parser->parse($filePath);
@@ -34,13 +36,17 @@ class ResumeController extends Controller
             ]);
         }
 
-        $analysis = json_decode($content, true) ?? [];
+        $analysis = json_decode($content, true);
+        if (! is_array($analysis)) {
+            return back()->withErrors([
+                'resume' => 'AI analysis failed. Please try again in a moment.',
+            ]);
+        }
         
-        \Log::info('analysis_content', ['content' => $content]);
-        \Log::info('analysis_decoded', $analysis);
 
         $resume = auth()->user()->resumes()->create([
             'file_path' => $path,
+            'file_name' => $fileName,
             'parsed_text' => $parsedText,
         ]);
 
