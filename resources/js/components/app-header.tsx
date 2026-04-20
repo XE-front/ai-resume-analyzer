@@ -72,7 +72,7 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
     return (
         <>
             <div className="border-b border-sidebar-border/80">
-                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
+                <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl text-[#1a1a1a]">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
                         <Sheet>
@@ -143,8 +143,8 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
-                        <NavigationMenu className="flex h-full items-stretch">
+                    <div className="ml-6 hidden h-full items-center space-x-6 lg:flex ">
+                        <NavigationMenu className="flex h-full items-stretch bg-white">
                             <NavigationMenuList className="flex h-full items-stretch space-x-2">
                                 {mainNavItems.map((item, index) => (
                                     <NavigationMenuItem
