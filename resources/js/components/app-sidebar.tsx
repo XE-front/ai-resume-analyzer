@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid, History } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -26,6 +26,11 @@ const mainNavItems: NavItem[] = [
         title: 'Upload Resume',
         href: '/upload-resume',
         icon: Upload,
+    },
+    {
+        title: 'History',
+        href: '/history',
+        icon: History,
     },
 ];
 

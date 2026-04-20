@@ -1,3 +1,4 @@
+import { jsPDF } from "jspdf";  
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -41,6 +42,53 @@ export default function ResultPage({ analysis, hasResume }: ResultPageProps) {
     const contentQuality = analysis?.content_quality ?? null;
     const scoreDescription = analysis?.score_description;
 
+    const handleDownloadReport = () => {
+        if (!analysis) return;
+
+        const doc = new jsPDF();
+        let y = 16;
+
+        const line = (text: string) => {
+            doc.text(text, 14, y);
+            y += 8;
+        };
+
+        line("Resume Analysis Report");
+        line(`Overall Score: ${analysis.score ?? '--'}`);
+        line(`ATS Score: ${analysis.ats_score ?? '--'}`);
+        line(`Format Quality: ${analysis.format_quality ?? '--'}`);
+        line(`Content Quality: ${analysis.content_quality ?? '--'}`);
+        y += 4;
+
+        if (analysis.score_description) {
+            line('Score Description:');
+            doc.text(analysis.score_description, 14, y);
+            y += 12;
+        }
+
+        if (analysis.strengths?.length) {
+            line('Strengths:');
+            analysis.strengths.forEach((s) => line(`- ${s}`));
+        }
+
+        if (analysis.weaknesses?.length) {
+            line('Areas for Improvement:');
+            analysis.weaknesses.forEach((w) => line(`- ${w}`));
+        }
+
+        if (analysis.skills?.length) {
+            line('Skills:');
+            analysis.skills.forEach((s) => line(`- ${s}`));
+        }
+
+        if (analysis.suggestions?.length) {
+            line('Suggestions:');
+            analysis.suggestions.forEach((s) => line(`- ${s}`));
+        }
+
+        doc.save('resume-analysis-report.pdf');
+    }
+
     return (
         <div className="max-w-7xl mx-auto space-y-6 p-10">
             {/* Header */}
@@ -52,7 +100,7 @@ export default function ResultPage({ analysis, hasResume }: ResultPageProps) {
                     </p>
                 </div>
                 <div className="flex gap-3">
-                    <Button variant="outline" className="bg-[#5E0006] text-white hover:bg-[#5E0006]/90">
+                    <Button variant="outline" className="bg-[#5E0006] text-white hover:bg-[#5E0006]/90" onClick={handleDownloadReport}>
                         <Download className="w-4 h-4 mr-2" />
                         Download Report
                     </Button>

@@ -44,7 +44,7 @@ export default function Welcome() {
                             How It Works
                         </a>
                         <Link href="/login"> 
-                            <Button variant="outline" size="sm" className="bg-[#5E0006]">Log In</Button>
+                            <Button variant="outline" size="sm" className="bg-[#5E0006] text-white">Log In</Button>
                         </Link>
                     </nav>
                 </div>
